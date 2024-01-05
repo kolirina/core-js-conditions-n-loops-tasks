@@ -21,8 +21,9 @@
  *  0  => true
  *  -5 => false
  */
-function isPositive(/* number */) {
-  throw new Error('Not implemented');
+function isPositive(number) {
+  const str = number.toString();
+  return str[0] !== '-';
 }
 
 /**
@@ -38,8 +39,15 @@ function isPositive(/* number */) {
  *  -5, 0, 5      => 5
  *  -0.1, 0, 0.2  => 0.2
  */
-function getMaxNumber(/* a, b, c */) {
-  throw new Error('Not implemented');
+function getMaxNumber(a, b, c) {
+  let max = a;
+  if (b > a) {
+    max = b;
+  }
+  if (c > max) {
+    max = c;
+  }
+  return max;
 }
 
 /**
@@ -60,8 +68,22 @@ function getMaxNumber(/* a, b, c */) {
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  */
-function canQueenCaptureKing(/* queen, king */) {
-  throw new Error('Not implemented');
+function canQueenCaptureKing(queen, king) {
+  if (queen.x === king.x || queen.y === king.y) {
+    return true;
+  }
+  for (let i = 1; i < 8; i += 1) {
+    if (
+      (queen.x + i === king.x && queen.y + i === king.y) ||
+      (queen.x - i === king.x && queen.y - i === king.y) ||
+      (queen.x + i === king.x && queen.y - i === king.y) ||
+      (queen.x - i === king.x && queen.y + i === king.y)
+    ) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 /**
@@ -82,8 +104,12 @@ function canQueenCaptureKing(/* queen, king */) {
  *  2, 2, 5   => false
  *  3, 0, 3   => false
  */
-function isIsoscelesTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isIsoscelesTriangle(a, b, c) {
+  if (a <= 0 || b <= 0 || c <= 0 || a + b < c || a + c < b || b + c < a) {
+    return false;
+  }
+
+  return a === b || a === c || b === c;
 }
 
 /**
@@ -100,8 +126,32 @@ function isIsoscelesTriangle(/* a, b, c */) {
  *  10  => X
  *  26  => XXVI
  */
-function convertToRomanNumerals(/* num */) {
-  throw new Error('Not implemented');
+function convertToRomanNumerals(num) {
+  const romanOnes = [
+    '',
+    'I',
+    'II',
+    'III',
+    'IV',
+    'V',
+    'VI',
+    'VII',
+    'VIII',
+    'IX',
+  ];
+  const romanTens = ['', 'X', 'XX', 'XXX', 'XL', 'L'];
+
+  if (num < 1 || num > 39) {
+    return 'Number out of range';
+  }
+
+  const onesPlace = num % 10;
+  const tensPlace = Math.floor(num / 10);
+
+  const romanNumOnes = romanOnes[onesPlace];
+  const romanNumTens = romanTens[tensPlace];
+
+  return romanNumTens + romanNumOnes;
 }
 
 /**
@@ -119,8 +169,95 @@ function convertToRomanNumerals(/* num */) {
  *  '10,5'    => 'one zero point five'
  *  '1950.2'  => 'one nine five zero point two'
  */
-function convertNumberToString(/* numberStr */) {
-  throw new Error('Not implemented');
+function convertNumberToString(numberStr) {
+  let words = '';
+  switch (numberStr[0]) {
+    case '0':
+      words += 'zero';
+      break;
+    case '1':
+      words += 'one';
+      break;
+    case '2':
+      words += 'two';
+      break;
+    case '3':
+      words += 'three';
+      break;
+    case '4':
+      words += 'four';
+      break;
+    case '5':
+      words += 'five';
+      break;
+    case '6':
+      words += 'six';
+      break;
+    case '7':
+      words += 'seven';
+      break;
+    case '8':
+      words += 'eight';
+      break;
+    case '9':
+      words += 'nine';
+      break;
+    case '-':
+      words += 'minus';
+      break;
+    case '.':
+    case ',':
+      words += 'point';
+      break;
+    default:
+      return 'no number provided';
+  }
+
+  for (let i = 1; i < numberStr.length; i += 1) {
+    switch (numberStr[i]) {
+      case '0':
+        words += ' zero';
+        break;
+      case '1':
+        words += ' one';
+        break;
+      case '2':
+        words += ' two';
+        break;
+      case '3':
+        words += ' three';
+        break;
+      case '4':
+        words += ' four';
+        break;
+      case '5':
+        words += ' five';
+        break;
+      case '6':
+        words += ' six';
+        break;
+      case '7':
+        words += ' seven';
+        break;
+      case '8':
+        words += ' eight';
+        break;
+      case '9':
+        words += ' nine';
+        break;
+      case '-':
+        words += ' minus';
+        break;
+      case '.':
+      case ',':
+        words += ' point';
+        break;
+      default:
+        return 'no number provided';
+    }
+  }
+
+  return words;
 }
 
 /**
