@@ -386,8 +386,66 @@ function getBalanceIndex(arr) {
  *          [10, 9,  8,  7]
  *        ]
  */
-function getSpiralMatrix(/* size */) {
-  throw new Error('Not implemented');
+function getSpiralMatrix(size) {
+  const number = [];
+  let counter = 1;
+  let i = 0;
+
+  while (i < size) {
+    number[i] = [];
+    let j = 0;
+
+    while (j < size) {
+      number[i][j] = 0;
+      j += 1;
+    }
+    i += 1;
+  }
+
+  let startRow = 0;
+  let endRow = size - 1;
+  let startCol = 0;
+  let endCol = size - 1;
+
+  while (startRow <= endRow && startCol <= endCol) {
+    let m = startCol;
+
+    while (m <= endCol) {
+      number[startRow][m] = counter;
+      counter += 1;
+      m += 1;
+    }
+    startRow += 1;
+
+    let j = startRow;
+
+    while (j <= endRow) {
+      number[j][endCol] = counter;
+      counter += 1;
+      j += 1;
+    }
+    endCol -= 1;
+
+    let k = endCol;
+
+    while (k >= startCol) {
+      number[endRow][k] = counter;
+      counter += 1;
+      k -= 1;
+    }
+    endRow -= 1;
+
+    let l = endRow;
+
+    while (l >= startRow) {
+      number[l][startCol] = counter;
+      counter += 1;
+      l -= 1;
+    }
+    startCol += 1;
+  }
+
+  return number;
 }
 
 /**
@@ -405,8 +463,27 @@ function getSpiralMatrix(/* size */) {
  *    [7, 8, 9]         [9, 6, 3]
  *  ]                 ]
  */
-function rotateMatrix(/* matrix */) {
-  throw new Error('Not implemented');
+function rotateMatrix(matrix) {
+  const n = matrix.length;
+  const myMatrix = matrix;
+
+  for (let i = 0; i < n; i += 1) {
+    for (let j = i; j < n; j += 1) {
+      const temp = myMatrix[i][j];
+      myMatrix[i][j] = myMatrix[j][i];
+      myMatrix[j][i] = temp;
+    }
+  }
+
+  for (let i = 0; i < n; i += 1) {
+    for (let j = 0; j < Math.floor(n / 2); j += 1) {
+      const temp = myMatrix[i][j];
+      myMatrix[i][j] = myMatrix[i][n - 1 - j];
+      myMatrix[i][n - 1 - j] = temp;
+    }
+  }
+
+  return matrix;
 }
 
 /**
@@ -423,8 +500,27 @@ function rotateMatrix(/* matrix */) {
  *  [2, 9, 5, 9]    => [2, 5, 9, 9]
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
-function sortByAsc(/* arr */) {
-  throw new Error('Not implemented');
+function sortByAsc(arr) {
+  const { length } = arr;
+  const myArr = arr;
+
+  for (let i = 0; i < length - 1; i += 1) {
+    let minIndex = i;
+
+    for (let j = i + 1; j < length; j += 1) {
+      if (myArr[j] < myArr[minIndex]) {
+        minIndex = j;
+      }
+    }
+
+    if (minIndex !== i) {
+      const temp = arr[i];
+      myArr[i] = myArr[minIndex];
+      myArr[minIndex] = temp;
+    }
+  }
+
+  return arr;
 }
 
 /**
@@ -444,8 +540,22 @@ function sortByAsc(/* arr */) {
  *  '012345', 3 => '024135' => '043215' => '031425'
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
-function shuffleChar(/* str, iterations */) {
-  throw new Error('Not implemented');
+function shuffleChar(str, iterations) {
+  let modifiedStr = str;
+  const strLength = str.length;
+
+  for (let iter = 0; iter < iterations; iter += 1) {
+    let oddChars = '';
+    let evenChars = '';
+    for (let i = 1; i < strLength; i += 2) {
+      oddChars += modifiedStr.charAt(i);
+      evenChars += modifiedStr.charAt(i - 1);
+    }
+
+    modifiedStr = evenChars + oddChars;
+  }
+
+  return modifiedStr;
 }
 
 /**
@@ -465,8 +575,24 @@ function shuffleChar(/* str, iterations */) {
  * @param {number} number The source number
  * @returns {number} The nearest larger number, or original number if none exists.
  */
-function getNearestBigger(/* number */) {
-  throw new Error('Not implemented');
+function getNearestBigger(number) {
+  const digits = Array.from(String(number), Number);
+
+  const breachIndex = digits.findIndex(
+    (digit, index) => digit > digits[index + 1]
+  );
+  if (breachIndex === -1) return number;
+
+  let swapIndex = digits.findIndex((digit) => digit > digits[breachIndex]);
+  if (swapIndex === -1) swapIndex = digits.length - 1;
+
+  [digits[breachIndex], digits[swapIndex]] = [
+    digits[swapIndex],
+    digits[breachIndex],
+  ];
+  const rightPart = digits.splice(breachIndex + 1).sort((a, b) => a - b);
+
+  return parseInt([...digits, ...rightPart].join(''), 10);
 }
 
 module.exports = {
