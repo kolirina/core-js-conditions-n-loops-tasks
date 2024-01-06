@@ -561,7 +561,7 @@ function shuffleChar(str, iterations) {
 /**
  * Returns the nearest largest integer consisting of the digits of the given positive integer.
  * If there is no such number, it returns the original number.
- * Usage of String class methods is not allowed in this task.
+ * Usage of String class methods is not allowed in this task..
  *
  * @example:
  * 12345    => 12354
